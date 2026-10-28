@@ -68,6 +68,7 @@ export class GlyphScene {
   private readonly material: ShaderMaterial;
   private readonly geometry = new BufferGeometry();
   private readonly dust: Points;
+  private readonly arc: Points;
 
   private readonly count: number;
   private readonly positions: Float32Array;
@@ -122,8 +123,8 @@ export class GlyphScene {
         uPixelRatio: { value: this.renderer.getPixelRatio() },
         uSize: { value: small ? 5.5 : 4.2 },
         uFade: { value: 1 },
-        uColorA: { value: new Color('#c8ff2e') },
-        uColorB: { value: new Color('#2ef2d0') },
+        uColorA: { value: new Color('#ffffff') },
+        uColorB: { value: new Color('#7f858e') },
       },
     });
     this.scene.add(new Points(this.geometry, this.material));
@@ -145,6 +146,31 @@ export class GlyphScene {
     dustMat.uniforms['uFade'].value = 0.35;
     this.dust = new Points(dustGeo, dustMat);
     this.scene.add(this.dust);
+
+    // Döntött, lassan forgó ezüst ív a szó mögött. Egységsugarú, a resize() méretezi.
+    const arcCount = small ? 1400 : 3200;
+    const span = Math.PI * 1.7;
+    const arcPos = new Float32Array(arcCount * 3);
+    const arcSeed = new Float32Array(arcCount);
+    for (let i = 0; i < arcCount; i++) {
+      const a = Math.random() * span;
+      const spread = (Math.random() + Math.random() + Math.random() - 1.5) * 0.035;
+      const r = 1 + spread;
+      arcPos[i * 3] = Math.cos(a) * r;
+      arcPos[i * 3 + 1] = Math.sin(a) * r;
+      arcPos[i * 3 + 2] = (Math.random() - 0.5) * 0.03;
+      // Az ív közepe fényes, a vége elhalványul.
+      arcSeed[i] = 0.05 + 0.9 * Math.pow(Math.sin((a / span) * Math.PI), 1.5) * (0.6 + Math.random() * 0.4);
+    }
+    const arcGeo = new BufferGeometry();
+    arcGeo.setAttribute('position', new BufferAttribute(arcPos, 3));
+    arcGeo.setAttribute('aSeed', new BufferAttribute(arcSeed, 1));
+    const arcMat = this.material.clone();
+    arcMat.uniforms['uFade'].value = 0.6;
+    arcMat.uniforms['uSize'].value = small ? 3.6 : 3;
+    this.arc = new Points(arcGeo, arcMat);
+    this.arc.rotation.set(1.12, -0.38, 0);
+    this.scene.add(this.arc);
 
     this.resize();
   }
@@ -201,6 +227,9 @@ export class GlyphScene {
     this.camera.updateProjectionMatrix();
     this.viewH = 2 * this.camera.position.z * Math.tan((this.camera.fov * Math.PI) / 360);
     this.viewW = this.viewH * this.camera.aspect;
+    const small = this.viewW < this.viewH;
+    this.arc.scale.setScalar(small ? this.viewW * 0.5 : this.viewW * 0.42);
+    this.arc.position.set(0, this.viewH * (small ? 0.2 : 0.16), -3);
     if (this.shapes.length) {
       this.shapes = this.options.words.map((w) => this.sampleWord(w.text));
       this.applyShape(this.wordIndex);
@@ -213,6 +242,8 @@ export class GlyphScene {
     this.material.dispose();
     this.dust.geometry.dispose();
     (this.dust.material as ShaderMaterial).dispose();
+    this.arc.geometry.dispose();
+    (this.arc.material as ShaderMaterial).dispose();
     this.renderer.dispose();
   }
 
@@ -333,6 +364,11 @@ export class GlyphScene {
     (this.dust.material as ShaderMaterial).uniforms['uTime'].value = t;
     this.dust.rotation.z = t * 0.01;
     this.dust.position.y = s * 3;
+    const arcMat = this.arc.material as ShaderMaterial;
+    arcMat.uniforms['uTime'].value = t;
+    arcMat.uniforms['uFade'].value = 0.6 * (1 - s);
+    this.arc.rotation.z = t * 0.08;
+    this.arc.rotation.x = 1.12 + this.parallax.y * 0.06 + s * 0.4;
 
     this.camera.position.x += (this.parallax.x * 0.6 - this.camera.position.x) * 0.04;
     this.camera.position.y += (this.parallax.y * 0.4 - this.camera.position.y) * 0.04;

@@ -36,9 +36,9 @@ export class Hero {
       return () => {};
     }
 
-    const font = "'Space Grotesk', 'Inter', sans-serif";
+    const font = "'Inter Tight', 'Inter', sans-serif";
     const [, { GlyphScene }] = await Promise.all([
-      document.fonts.load(`700 100px 'Space Grotesk'`, this.words.map((w) => w.text).join('')),
+      document.fonts.load(`600 100px 'Inter Tight'`, this.words.map((w) => w.text).join('')),
       import('./glyph-scene'),
     ]);
 
