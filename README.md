@@ -7,6 +7,17 @@
 
 Élesben a Laravel szolgálja ki a lebuildelt Angular oldalt is, így **egy domainen, egy átlagos PHP tárhelyen** fut minden (pl. Rackhost, Tárhely.eu, bármilyen cPanel).
 
+## Dizájn és effektek
+
+Sötét, filmszerű megjelenés, a modern „agency” oldalak stílusában:
+
+- **Nyitóképernyő**: több ezer fénylő részecske (three.js / WebGL), amik sorban kirajzolják a „fordítás” szót különböző nyelveken. Az egér közelében szétrebbennek, görgetéskor szétrepülnek.
+- **Élő fordítás**: rögzített szakasz, ahol görgetésre betűnként fordítódik egy mondat magyarról angolra, majd németre (GSAP ScrollTrigger).
+- **Lépések**: asztali gépen vízszintesen görgetett panelek.
+- Soronként becsúszó címsorok, felpörgő számlálók, 3D-ben dönthető kártyák, mágneses gombok, egyedi kurzor, nyelvi szalag.
+
+Teljesítmény: a 3D jelenet külön, késleltetve töltődik be (az oldal maga gyorsan megjelenik). Mobilon kevesebb részecskével fut. Ha a nyitóképernyő nem látszik, leáll. Ha a látogató a rendszerében csökkentett mozgást kért, vagy a böngésző nem tud WebGL-t, egyszerűsített, statikus változatot kap.
+
 ## Hogyan működik az ajánlatkérés?
 
 1. Az ügyfél kitölti az űrlapot, és opcionálisan feltölti a dokumentumot.
@@ -61,7 +72,10 @@ Tesztek: `cd backend && php artisan test`
 Szinte minden szöveg és adat egy helyen van: **`frontend/src/app/site.config.ts`**. Itt kell kicserélni:
 
 - `[TELEFONSZÁM]`, `[EMAIL]`, cím, cégadatok
-- `[X]`: statisztikák és árak
+- **`STATS`: most PÉLDA számok vannak benne (1200 ügyfél stb.), ezeket élesítés előtt valósra kell cserélni!**
+- `[X]`: árak
+- `HERO_WORDS`: a nyitóképernyőn a részecskékből kirajzolódó szavak (csak olyan nyelv legyen, amit valóban vállal)
+- `LIVE_TRANSLATION`: a görgetésre „élőben” lefordítódó mondat
 - Szolgáltatások, nyelvek, GYIK, vélemények (valódi véleményekre, pl. a Google Cégprofilból)
 
 Továbbá:

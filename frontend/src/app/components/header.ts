@@ -1,11 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, HostListener, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   imports: [RouterLink],
   template: `
-    <header class="site-header">
+    <header class="site-header" [class.scrolled]="scrolled()">
       <div class="container header-inner">
         <a routerLink="/" fragment="top" class="logo" aria-label="Done Translations – főoldal">
           <span class="logo-mark" aria-hidden="true">✓</span>
@@ -32,6 +32,12 @@ import { RouterLink } from '@angular/router';
 })
 export class Header {
   protected readonly open = signal(false);
+  protected readonly scrolled = signal(false);
+
+  @HostListener('window:scroll')
+  protected onScroll(): void {
+    this.scrolled.set(window.scrollY > 40);
+  }
   protected readonly links = [
     { fragment: 'szolgaltatasok', label: 'Szolgáltatások' },
     { fragment: 'hogyan', label: 'Hogyan működik' },

@@ -10,11 +10,30 @@ export const SITE = {
   openingHours: 'H–P: 8:00–18:00',
 };
 
+// A hős szakaszban a részecskék sorban ezeket a szavakat formázzák meg.
+export const HERO_WORDS = [
+  { text: 'Fordítás', language: 'Magyar' },
+  { text: 'Translation', language: 'Angol' },
+  { text: 'Übersetzung', language: 'Német' },
+  { text: 'Traduction', language: 'Francia' },
+  { text: 'Traduzione', language: 'Olasz' },
+  { text: 'Traducción', language: 'Spanyol' },
+  { text: 'Vertaling', language: 'Holland' },
+];
+
+// Görgetésre "élőben" lefordítódó mondat.
+export const LIVE_TRANSLATION = [
+  { language: 'Magyar', text: 'Nálunk a határidő nem kérdés, hanem ígéret.' },
+  { language: 'English', text: 'With us, a deadline is not a question but a promise.' },
+  { language: 'Deutsch', text: 'Bei uns ist eine Frist keine Frage, sondern ein Versprechen.' },
+];
+
+// PÉLDA SZÁMOK! Cserélje a valós adatokra, mielőtt élesedik az oldal.
 export const STATS = [
-  { value: '[X]+', label: 'elégedett ügyfél' },
-  { value: '[X]+', label: 'lefordított oldal' },
-  { value: '[X]', label: 'nyelv' },
-  { value: '1 óra', label: 'alatt árajánlat' },
+  { value: 1200, suffix: '+', label: 'elégedett ügyfél' },
+  { value: 15000, suffix: '+', label: 'lefordított oldal' },
+  { value: 9, suffix: '', label: 'nyelv' },
+  { value: 1, suffix: ' óra', label: 'alatt árajánlat' },
 ];
 
 export const SERVICES = [

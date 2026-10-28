@@ -1,42 +1,19 @@
-<!-- HERO -->
-<section class="hero">
-  <div class="container hero-inner">
-    <div class="hero-text">
-      <p class="eyebrow">Fordítás magánszemélyeknek és cégeknek</p>
-      <h1>Pontos fordítás, <span class="accent">határidőre</span>, rejtett költségek nélkül.</h1>
-      <p class="lead">
-        Küldje el a dokumentumot, és <strong>1 órán belül</strong> fix, ingyenes árajánlatot kap.
-        Bizonyítványtól a szerződésig, weboldaltól a műszaki leírásig.
-      </p>
-      <div class="hero-cta">
-        <a routerLink="/" fragment="ajanlat" class="btn btn-lg">Ingyenes árajánlatot kérek</a>
-        <a [href]="site.phoneHref" class="btn btn-lg btn-ghost">📞 Hívjon most</a>
-      </div>
-      <ul class="trust-row">
-        <li>✓ Ingyenes, kötelezettség nélküli ajánlat</li>
-        <li>✓ Expressz fordítás akár 24 órán belül</li>
-        <li>✓ Bizalmas adatkezelés</li>
-      </ul>
-    </div>
-    <div class="hero-card" aria-hidden="true">
-      <div class="doc">
-        <div class="doc-head"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-        <div class="doc-lang">HU <span>→</span> EN</div>
-        <div class="line w90"></div>
-        <div class="line w75"></div>
-        <div class="line w85"></div>
-        <div class="line w60"></div>
-        <div class="doc-done">✓ Kész, határidő előtt</div>
-      </div>
-    </div>
-  </div>
-</section>
+<app-hero />
 
-<!-- STATS -->
-<section class="stats">
-  <div class="container stats-inner">
-    @for (s of stats; track s.label) {
-      <div><strong>{{ s.value }}</strong><span>{{ s.label }}</span></div>
+<!-- NYELVI SZALAG -->
+<section class="marquee" aria-label="Nyelvek">
+  <div class="marquee-row">
+    @for (round of [1, 2, 3]; track round) {
+      @for (l of languages; track l.name) {
+        <span>{{ l.name }}</span><i>✦</i>
+      }
+    }
+  </div>
+  <div class="marquee-row outline">
+    @for (round of [1, 2, 3]; track round) {
+      @for (l of languages; track l.name) {
+        <span>{{ l.name }}</span><i>✦</i>
+      }
     }
   </div>
 </section>
@@ -44,55 +21,87 @@
 <!-- SZOLGÁLTATÁSOK -->
 <section class="section" id="szolgaltatasok">
   <div class="container">
-    <h2 class="section-title">Miben segíthetünk?</h2>
-    <p class="section-sub">Minden fordítást anyanyelvi szintű, szakterületén jártas fordító készít, és leadás előtt ellenőrzünk.</p>
+    <p class="kicker">01 — Szolgáltatások</p>
+    <h2 class="display" data-split>
+      <span class="line"><span>Bármilyen szöveg,</span></span>
+      <span class="line"><span class="muted">bármilyen határidő.</span></span>
+    </h2>
     <div class="grid cards">
-      @for (s of services; track s.title) {
-        <article class="card" appReveal>
+      @for (s of services; track s.title; let i = $index) {
+        <article class="card" appTilt data-reveal>
+          <span class="card-index">{{ (i + 1).toString().padStart(2, '0') }}</span>
           <div class="icon">{{ s.icon }}</div>
           <h3>{{ s.title }}</h3>
           <p>{{ s.text }}</p>
         </article>
       }
     </div>
-
-    <div class="languages">
-      <h3>Nyelvek</h3>
-      <ul class="chips">
-        @for (l of languages; track l.name) {
-          <li>{{ l.flag }} {{ l.name.charAt(0).toUpperCase() + l.name.slice(1) }}</li>
-        }
-        <li>+ további nyelvek kérésre</li>
-      </ul>
-    </div>
   </div>
 </section>
 
-<!-- HOGYAN MŰKÖDIK -->
-<section class="section section-alt" id="hogyan">
-  <div class="container">
-    <h2 class="section-title">3 egyszerű lépés, személyes találkozó nélkül</h2>
-    <ol class="steps">
-      @for (step of steps; track step.title; let i = $index) {
-        <li appReveal>
-          <span class="step-num">{{ i + 1 }}</span>
+<!-- ÉLŐ FORDÍTÁS (rögzített, görgetésre fordul) -->
+<section class="live" aria-label="Fordítás bemutató">
+  <div class="container live-inner">
+    <p class="kicker">02 — Így dolgozunk</p>
+    <div class="live-head">
+      <span class="live-dot"></span>
+      <span class="live-lang">{{ live[0].language }}</span>
+    </div>
+    <p class="live-text">{{ live[0].text }}</p>
+    <div class="live-progress"><span></span></div>
+    <p class="live-caption">Nem gépi fordítás: minden szöveget szakfordító készít, és leadás előtt ellenőrzünk.</p>
+  </div>
+</section>
+
+<!-- HOGYAN MŰKÖDIK (vízszintes görgetés asztali gépen) -->
+<section class="steps-pin" id="hogyan">
+  <div class="steps-head container">
+    <p class="kicker">03 — Hogyan működik</p>
+    <h2 class="display" data-split>
+      <span class="line"><span>3 lépés.</span></span>
+      <span class="line"><span class="muted">Személyes találkozó nélkül.</span></span>
+    </h2>
+  </div>
+  <div class="steps-track">
+    @for (step of steps; track step.title; let i = $index) {
+      <article class="step-panel">
+        <span class="step-num">{{ (i + 1).toString().padStart(2, '0') }}</span>
+        <div>
           <h3>{{ step.title }}</h3>
           <p>{{ step.text }}</p>
-        </li>
-      }
-    </ol>
-    <div class="center"><a routerLink="/" fragment="ajanlat" class="btn btn-lg">Kezdjük el – ajánlatot kérek</a></div>
+        </div>
+      </article>
+    }
+    <article class="step-panel step-cta">
+      <h3>Kezdjük?</h3>
+      <a routerLink="/" fragment="ajanlat" class="btn btn-lg" appMagnetic>Ajánlatot kérek <span aria-hidden="true">→</span></a>
+    </article>
+  </div>
+</section>
+
+<!-- SZÁMOK -->
+<section class="stats">
+  <div class="container stats-inner">
+    @for (s of stats; track s.label) {
+      <div data-reveal>
+        <strong><span [attr.data-count]="s.value">{{ s.value.toLocaleString('hu-HU') }}</span>{{ s.suffix }}</strong>
+        <span>{{ s.label }}</span>
+      </div>
+    }
   </div>
 </section>
 
 <!-- ÁRAK -->
 <section class="section" id="arak">
   <div class="container">
-    <h2 class="section-title">Átlátható árak</h2>
-    <p class="section-sub">Irányárak. A pontos összeget az ingyenes ajánlatban adjuk meg, és utána nem változik.</p>
+    <p class="kicker">04 — Árak</p>
+    <h2 class="display" data-split>
+      <span class="line"><span>Fix ár.</span></span>
+      <span class="line"><span class="muted">Rejtett költség nélkül.</span></span>
+    </h2>
     <div class="grid pricing">
       @for (p of prices; track p.title) {
-        <div class="price-card" [class.featured]="p.featured" appReveal>
+        <div class="price-card" [class.featured]="p.featured" appTilt data-reveal>
           @if (p.featured) {
             <span class="badge">Legnépszerűbb</span>
           }
@@ -103,11 +112,11 @@
               <li>{{ f }}</li>
             }
           </ul>
-          <a routerLink="/" fragment="ajanlat" class="btn" [class.btn-outline]="!p.featured">Ajánlatot kérek</a>
+          <a routerLink="/" fragment="ajanlat" class="btn" [class.btn-ghost]="!p.featured">Ajánlatot kérek</a>
         </div>
       }
     </div>
-    <p class="note">Cégeknek, rendszeres megrendelőknek egyedi kedvezményt adunk. Kérjen ajánlatot!</p>
+    <p class="note">Irányárak. Cégeknek, rendszeres megrendelőknek egyedi kedvezményt adunk.</p>
   </div>
 </section>
 
@@ -115,29 +124,40 @@
 <section class="section section-alt">
   <div class="container why">
     <div>
-      <h2 class="section-title left">Miért minket válasszon?</h2>
-      <p>Nem egy arctalan nagy iroda vagyunk. Nálunk mindig ugyanaz az ember válaszol, aki ismeri az ügyét, és felelősséget vállal a munkáért.</p>
-      <p>[RÖVID BEMUTATKOZÁS: ki vagy, mióta fordítasz, milyen végzettséged / tapasztalatod van. 2–3 mondat, személyesen, közvetlen hangon.]</p>
+      <p class="kicker">05 — Miért mi</p>
+      <h2 class="display" data-split>
+        <span class="line"><span>Egy ember,</span></span>
+        <span class="line"><span class="muted">aki ismeri az ügyét.</span></span>
+      </h2>
+      <p class="why-text">Nem egy arctalan nagy iroda vagyunk. Nálunk mindig ugyanaz az ember válaszol, és felelősséget vállal a munkáért.</p>
+      <p class="why-text">[RÖVID BEMUTATKOZÁS: ki vagy, mióta fordítasz, milyen végzettséged / tapasztalatod van.]</p>
     </div>
     <ul class="why-list">
       @for (r of reasons; track r.title) {
-        <li appReveal><strong>{{ r.title }}</strong> {{ r.text }}</li>
+        <li data-reveal><strong>{{ r.title }}</strong> {{ r.text }}</li>
       }
     </ul>
   </div>
 </section>
 
 <!-- VÉLEMÉNYEK -->
-<section class="section" id="velemenyek">
+<section class="section testimonials-section" id="velemenyek">
   <div class="container">
-    <h2 class="section-title">Ügyfeleink mondták</h2>
-    <div class="grid testimonials">
-      @for (t of testimonials; track t.author) {
-        <figure class="quote" appReveal>
-          <div class="stars" aria-label="5 csillag">★★★★★</div>
-          <blockquote>„{{ t.quote }}”</blockquote>
-          <figcaption>{{ t.author }}</figcaption>
-        </figure>
+    <p class="kicker">06 — Vélemények</p>
+    <h2 class="display" data-split>
+      <span class="line"><span>Ügyfeleink mondták.</span></span>
+    </h2>
+  </div>
+  <div class="t-marquee">
+    <div class="t-track">
+      @for (round of [1, 2]; track round) {
+        @for (t of testimonials; track t.author) {
+          <figure class="quote" [attr.aria-hidden]="round === 2 ? 'true' : null">
+            <div class="stars" aria-label="5 csillag">★★★★★</div>
+            <blockquote>„{{ t.quote }}”</blockquote>
+            <figcaption>{{ t.author }}</figcaption>
+          </figure>
+        }
       }
     </div>
   </div>
@@ -147,12 +167,16 @@
 <section class="section section-cta" id="ajanlat">
   <div class="container form-wrap">
     <div class="form-intro">
-      <h2>Kérjen ingyenes árajánlatot</h2>
+      <p class="kicker">07 — Árajánlat</p>
+      <h2 class="display" data-split>
+        <span class="line"><span>Kérjen ingyenes</span></span>
+        <span class="line"><span class="accent">árajánlatot.</span></span>
+      </h2>
       <p>Töltse fel a dokumentumot, és munkaidőben 1 órán belül jelentkezünk a pontos árral és határidővel.</p>
       <ul class="contact-list">
-        <li>📞 <a [href]="site.phoneHref">{{ site.phone }}</a></li>
-        <li>✉️ <a [href]="'mailto:' + site.email">{{ site.email }}</a></li>
-        <li>🕘 {{ site.openingHours }}</li>
+        <li><span>Telefon</span><a [href]="site.phoneHref">{{ site.phone }}</a></li>
+        <li><span>E-mail</span><a [href]="'mailto:' + site.email">{{ site.email }}</a></li>
+        <li><span>Nyitvatartás</span>{{ site.openingHours }}</li>
       </ul>
     </div>
     <app-quote-form />
@@ -162,7 +186,10 @@
 <!-- GYIK -->
 <section class="section" id="gyik">
   <div class="container narrow">
-    <h2 class="section-title">Gyakori kérdések</h2>
+    <p class="kicker">08 — GYIK</p>
+    <h2 class="display" data-split>
+      <span class="line"><span>Gyakori kérdések.</span></span>
+    </h2>
     @for (item of faq; track item.q) {
       <details>
         <summary>{{ item.q }}</summary>
@@ -175,11 +202,11 @@
 <!-- ZÁRÓ CTA -->
 <section class="final-cta">
   <div class="container">
-    <h2>Sürgős a fordítás? Ne várjon tovább.</h2>
+    <h2>Sürgős?<br /><span class="accent">Ne várjon.</span></h2>
     <p>Az ajánlatkérés ingyenes és semmire nem kötelez.</p>
     <div class="hero-cta center">
-      <a routerLink="/" fragment="ajanlat" class="btn btn-lg btn-light">Ajánlatot kérek</a>
-      <a [href]="site.phoneHref" class="btn btn-lg btn-ghost-light">📞 {{ site.phone }}</a>
+      <a routerLink="/" fragment="ajanlat" class="btn btn-lg" appMagnetic>Ajánlatot kérek <span aria-hidden="true">→</span></a>
+      <a [href]="site.phoneHref" class="btn btn-lg btn-ghost">{{ site.phone }}</a>
     </div>
   </div>
 </section>
