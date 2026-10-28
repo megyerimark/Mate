@@ -1,0 +1,83 @@
+<form class="quote-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <p class="hidden" aria-hidden="true">
+    <label>Ne töltse ki: <input formControlName="website" tabindex="-1" autocomplete="off" /></label>
+  </p>
+
+  <div class="row">
+    <label [class.has-error]="invalid('name')">
+      Név*
+      <input type="text" formControlName="name" autocomplete="name" />
+      @if (invalid('name')) {
+        <small class="error">{{ serverErrors()['name'] || 'Kérjük, adja meg a nevét.' }}</small>
+      }
+    </label>
+    <label [class.has-error]="invalid('email')">
+      E-mail*
+      <input type="email" formControlName="email" autocomplete="email" />
+      @if (invalid('email')) {
+        <small class="error">{{ serverErrors()['email'] || 'Kérjük, adjon meg egy érvényes e-mail címet.' }}</small>
+      }
+    </label>
+  </div>
+
+  <div class="row">
+    <label>
+      Telefon
+      <input type="tel" formControlName="phone" autocomplete="tel" />
+    </label>
+    <label>
+      Határidő
+      <select formControlName="deadline">
+        @for (d of deadlines; track d.value) {
+          <option [value]="d.value">{{ d.label }}</option>
+        }
+      </select>
+    </label>
+  </div>
+
+  <div class="row">
+    <label>
+      Forrásnyelv
+      <input type="text" formControlName="source_language" placeholder="pl. magyar" list="nyelvek" />
+    </label>
+    <label>
+      Célnyelv
+      <input type="text" formControlName="target_language" placeholder="pl. angol" list="nyelvek" />
+    </label>
+  </div>
+  <datalist id="nyelvek">
+    <option value="magyar"></option>
+    @for (l of languages; track l.name) {
+      <option [value]="l.name"></option>
+    }
+  </datalist>
+
+  <label [class.has-error]="fileError() || serverErrors()['document']">
+    Dokumentum feltöltése
+    <input type="file" [accept]="accept" (change)="onFile($event)" />
+    @if (fileError() || serverErrors()['document']) {
+      <small class="error">{{ fileError() || serverErrors()['document'] }}</small>
+    } @else {
+      <small>PDF, Word, kép (telefonos fotó is jó). Max. {{ maxMb }} MB.</small>
+    }
+  </label>
+
+  <label>
+    Megjegyzés
+    <textarea formControlName="message" rows="3" placeholder="Pl. mire kell a fordítás, kell-e záradék vagy postai példány?"></textarea>
+  </label>
+
+  <label class="check" [class.has-error]="invalid('privacy_accepted')">
+    <input type="checkbox" formControlName="privacy_accepted" />
+    <span>Elfogadom az <a href="#" target="_blank">adatkezelési tájékoztatót</a>.*</span>
+  </label>
+
+  @if (generalError()) {
+    <p class="form-alert" role="alert">{{ generalError() }}</p>
+  }
+
+  <button type="submit" class="btn btn-lg btn-block" [disabled]="sending()">
+    {{ sending() ? 'Küldés…' : 'Ingyenes ajánlatot kérek' }}
+  </button>
+  <p class="form-note">🔒 Dokumentumait bizalmasan kezeljük, harmadik félnek nem adjuk ki.</p>
+</form>

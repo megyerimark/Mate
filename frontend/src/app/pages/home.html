@@ -1,0 +1,185 @@
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow">Fordítás magánszemélyeknek és cégeknek</p>
+      <h1>Pontos fordítás, <span class="accent">határidőre</span>, rejtett költségek nélkül.</h1>
+      <p class="lead">
+        Küldje el a dokumentumot, és <strong>1 órán belül</strong> fix, ingyenes árajánlatot kap.
+        Bizonyítványtól a szerződésig, weboldaltól a műszaki leírásig.
+      </p>
+      <div class="hero-cta">
+        <a routerLink="/" fragment="ajanlat" class="btn btn-lg">Ingyenes árajánlatot kérek</a>
+        <a [href]="site.phoneHref" class="btn btn-lg btn-ghost">📞 Hívjon most</a>
+      </div>
+      <ul class="trust-row">
+        <li>✓ Ingyenes, kötelezettség nélküli ajánlat</li>
+        <li>✓ Expressz fordítás akár 24 órán belül</li>
+        <li>✓ Bizalmas adatkezelés</li>
+      </ul>
+    </div>
+    <div class="hero-card" aria-hidden="true">
+      <div class="doc">
+        <div class="doc-head"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="doc-lang">HU <span>→</span> EN</div>
+        <div class="line w90"></div>
+        <div class="line w75"></div>
+        <div class="line w85"></div>
+        <div class="line w60"></div>
+        <div class="doc-done">✓ Kész, határidő előtt</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container stats-inner">
+    @for (s of stats; track s.label) {
+      <div><strong>{{ s.value }}</strong><span>{{ s.label }}</span></div>
+    }
+  </div>
+</section>
+
+<!-- SZOLGÁLTATÁSOK -->
+<section class="section" id="szolgaltatasok">
+  <div class="container">
+    <h2 class="section-title">Miben segíthetünk?</h2>
+    <p class="section-sub">Minden fordítást anyanyelvi szintű, szakterületén jártas fordító készít, és leadás előtt ellenőrzünk.</p>
+    <div class="grid cards">
+      @for (s of services; track s.title) {
+        <article class="card" appReveal>
+          <div class="icon">{{ s.icon }}</div>
+          <h3>{{ s.title }}</h3>
+          <p>{{ s.text }}</p>
+        </article>
+      }
+    </div>
+
+    <div class="languages">
+      <h3>Nyelvek</h3>
+      <ul class="chips">
+        @for (l of languages; track l.name) {
+          <li>{{ l.flag }} {{ l.name.charAt(0).toUpperCase() + l.name.slice(1) }}</li>
+        }
+        <li>+ további nyelvek kérésre</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- HOGYAN MŰKÖDIK -->
+<section class="section section-alt" id="hogyan">
+  <div class="container">
+    <h2 class="section-title">3 egyszerű lépés, személyes találkozó nélkül</h2>
+    <ol class="steps">
+      @for (step of steps; track step.title; let i = $index) {
+        <li appReveal>
+          <span class="step-num">{{ i + 1 }}</span>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.text }}</p>
+        </li>
+      }
+    </ol>
+    <div class="center"><a routerLink="/" fragment="ajanlat" class="btn btn-lg">Kezdjük el – ajánlatot kérek</a></div>
+  </div>
+</section>
+
+<!-- ÁRAK -->
+<section class="section" id="arak">
+  <div class="container">
+    <h2 class="section-title">Átlátható árak</h2>
+    <p class="section-sub">Irányárak. A pontos összeget az ingyenes ajánlatban adjuk meg, és utána nem változik.</p>
+    <div class="grid pricing">
+      @for (p of prices; track p.title) {
+        <div class="price-card" [class.featured]="p.featured" appReveal>
+          @if (p.featured) {
+            <span class="badge">Legnépszerűbb</span>
+          }
+          <h3>{{ p.title }}</h3>
+          <p class="price">{{ p.price }} <span>{{ p.unit }}</span></p>
+          <ul>
+            @for (f of p.features; track f) {
+              <li>{{ f }}</li>
+            }
+          </ul>
+          <a routerLink="/" fragment="ajanlat" class="btn" [class.btn-outline]="!p.featured">Ajánlatot kérek</a>
+        </div>
+      }
+    </div>
+    <p class="note">Cégeknek, rendszeres megrendelőknek egyedi kedvezményt adunk. Kérjen ajánlatot!</p>
+  </div>
+</section>
+
+<!-- MIÉRT MI -->
+<section class="section section-alt">
+  <div class="container why">
+    <div>
+      <h2 class="section-title left">Miért minket válasszon?</h2>
+      <p>Nem egy arctalan nagy iroda vagyunk. Nálunk mindig ugyanaz az ember válaszol, aki ismeri az ügyét, és felelősséget vállal a munkáért.</p>
+      <p>[RÖVID BEMUTATKOZÁS: ki vagy, mióta fordítasz, milyen végzettséged / tapasztalatod van. 2–3 mondat, személyesen, közvetlen hangon.]</p>
+    </div>
+    <ul class="why-list">
+      @for (r of reasons; track r.title) {
+        <li appReveal><strong>{{ r.title }}</strong> {{ r.text }}</li>
+      }
+    </ul>
+  </div>
+</section>
+
+<!-- VÉLEMÉNYEK -->
+<section class="section" id="velemenyek">
+  <div class="container">
+    <h2 class="section-title">Ügyfeleink mondták</h2>
+    <div class="grid testimonials">
+      @for (t of testimonials; track t.author) {
+        <figure class="quote" appReveal>
+          <div class="stars" aria-label="5 csillag">★★★★★</div>
+          <blockquote>„{{ t.quote }}”</blockquote>
+          <figcaption>{{ t.author }}</figcaption>
+        </figure>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ÁRAJÁNLAT -->
+<section class="section section-cta" id="ajanlat">
+  <div class="container form-wrap">
+    <div class="form-intro">
+      <h2>Kérjen ingyenes árajánlatot</h2>
+      <p>Töltse fel a dokumentumot, és munkaidőben 1 órán belül jelentkezünk a pontos árral és határidővel.</p>
+      <ul class="contact-list">
+        <li>📞 <a [href]="site.phoneHref">{{ site.phone }}</a></li>
+        <li>✉️ <a [href]="'mailto:' + site.email">{{ site.email }}</a></li>
+        <li>🕘 {{ site.openingHours }}</li>
+      </ul>
+    </div>
+    <app-quote-form />
+  </div>
+</section>
+
+<!-- GYIK -->
+<section class="section" id="gyik">
+  <div class="container narrow">
+    <h2 class="section-title">Gyakori kérdések</h2>
+    @for (item of faq; track item.q) {
+      <details>
+        <summary>{{ item.q }}</summary>
+        <p>{{ item.a }}</p>
+      </details>
+    }
+  </div>
+</section>
+
+<!-- ZÁRÓ CTA -->
+<section class="final-cta">
+  <div class="container">
+    <h2>Sürgős a fordítás? Ne várjon tovább.</h2>
+    <p>Az ajánlatkérés ingyenes és semmire nem kötelez.</p>
+    <div class="hero-cta center">
+      <a routerLink="/" fragment="ajanlat" class="btn btn-lg btn-light">Ajánlatot kérek</a>
+      <a [href]="site.phoneHref" class="btn btn-lg btn-ghost-light">📞 {{ site.phone }}</a>
+    </div>
+  </div>
+</section>

@@ -260,3 +260,13 @@ details p { color: var(--muted); margin: 12px 0 0; }
   .mobile-bar a { padding: 16px; text-align: center; text-decoration: none; font-weight: 700; color: var(--brand-dark); }
   .mobile-bar a.primary { background: var(--brand); color: #fff; }
 }
+
+/* Űrlap hibák, köszönő oldal */
+.quote-form .has-error input:not([type=checkbox]), .quote-form .has-error select { border-color: #dc2626; }
+.quote-form .error { color: #dc2626; }
+.quote-form .check.has-error span { color: #dc2626; }
+.form-alert { margin: 0; padding: .8em 1em; border-radius: 10px; background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+.btn:disabled { opacity: .7; cursor: wait; transform: none; box-shadow: none; }
+.thank-you { min-height: 70vh; display: grid; place-items: center; }
+.thank-you .lead { margin: 0 auto 32px; }
+.logo-mark.big { width: 64px; height: 64px; font-size: 2rem; margin: 0 auto 24px; }
