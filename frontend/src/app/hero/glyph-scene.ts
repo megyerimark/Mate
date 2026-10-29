@@ -1,5 +1,6 @@
 import {
   AdditiveBlending,
+  NormalBlending,
   BufferAttribute,
   BufferGeometry,
   Color,
@@ -18,6 +19,9 @@ export interface GlyphWord {
 interface SceneOptions {
   words: GlyphWord[];
   font: string;
+  /** A részecskék két színe (világos és sötét vég) és hogy összeadódó fénnyel ragyogjanak-e (sötét háttéren). */
+  colors: [string, string];
+  additive: boolean;
   onWordChange: (index: number) => void;
   /** Ennyi ideig áll egy szó, ms. */
   holdMs?: number;
@@ -117,14 +121,14 @@ export class GlyphScene {
       fragmentShader: FRAGMENT,
       transparent: true,
       depthWrite: false,
-      blending: AdditiveBlending,
+      blending: options.additive ? AdditiveBlending : NormalBlending,
       uniforms: {
         uTime: { value: 0 },
         uPixelRatio: { value: this.renderer.getPixelRatio() },
         uSize: { value: small ? 5.5 : 4.2 },
         uFade: { value: 1 },
-        uColorA: { value: new Color('#ffffff') },
-        uColorB: { value: new Color('#7f858e') },
+        uColorA: { value: new Color(options.colors[0]) },
+        uColorB: { value: new Color(options.colors[1]) },
       },
     });
     this.scene.add(new Points(this.geometry, this.material));

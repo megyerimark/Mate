@@ -43,9 +43,14 @@ export class Hero {
     ]);
 
     const canvas = this.canvas().nativeElement;
+    // A színek a téma CSS-változóiból jönnek (styles.css).
+    const theme = getComputedStyle(document.documentElement);
+    const color = (name: string) => theme.getPropertyValue(name).trim();
     const scene: GlyphScene = new GlyphScene(canvas, {
       words: this.words,
       font,
+      colors: [color('--particle-a') || '#ffffff', color('--particle-b') || '#8d9bac'],
+      additive: color('--particle-blend') !== 'normal',
       onWordChange: (i) => this.index.set(i),
     });
     scene.build();

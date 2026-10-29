@@ -7,6 +7,20 @@
 
 Élesben a Laravel szolgálja ki a lebuildelt Angular oldalt is, így **egy domainen, egy átlagos PHP tárhelyen** fut minden (pl. Rackhost, Tárhely.eu, bármilyen cPanel).
 
+## Színtémák
+
+Három beépített színtéma van, mindegyik ugyanazokkal az effektekkel:
+
+| Téma | Kód | Hangulat |
+|---|---|---|
+| Midnight Blue + Teal | `midnight` (alapértelmezett) | sötétkék, türkiz gombok |
+| Ivory + Forest Green | `ivory` | világos elefántcsont, mélyzöld gombok |
+| Charcoal + Champagne | `champagne` | grafit, pezsgőarany gombok |
+
+- **Kipróbálás:** a cím végére `?tema=ivory` vagy `?tema=champagne` (pl. `https://donetranslations.hu/?tema=ivory`).
+- **Végleges választás:** a `frontend/src/index.html`-ben a `<html lang="hu" data-theme="midnight">` értékét kell átírni.
+- A színek a `frontend/src/styles.css` elején vannak, témánként egy blokkban.
+
 ## Dizájn és effektek
 
 Sötét, filmszerű megjelenés, a modern „agency” oldalak stílusában:
