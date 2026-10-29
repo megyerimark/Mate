@@ -38,32 +38,32 @@ export const STATS = [
 
 export const SERVICES = [
   {
-    icon: '📄',
+    icon: 'document',
     title: 'Hivatalos iratok',
     text: 'Bizonyítványok, oklevelek, anyakönyvi kivonatok, erkölcsi bizonyítvány, jogosítvány – záradékolt fordítással, külföldi munkavállaláshoz és tanuláshoz.',
   },
   {
-    icon: '⚖️',
+    icon: 'legal',
     title: 'Jogi és üzleti fordítás',
     text: 'Szerződések, cégiratok, ÁSZF, pályázatok, üzleti levelezés. Precíz terminológia, szigorú titoktartás.',
   },
   {
-    icon: '⚙️',
+    icon: 'technical',
     title: 'Műszaki és orvosi szakfordítás',
     text: 'Használati útmutatók, műszaki leírások, orvosi leletek, zárójelentések – szakterületen jártas fordítóval.',
   },
   {
-    icon: '🌐',
+    icon: 'web',
     title: 'Weboldal és marketing',
     text: 'Weboldalak, webshopok, termékleírások lokalizálása, hogy külföldön is ugyanúgy eladjon, mint itthon.',
   },
   {
-    icon: '🔍',
+    icon: 'proofread',
     title: 'Lektorálás',
     text: 'Meglévő fordítások, szakdolgozatok, cikkek nyelvi és szakmai ellenőrzése, javítása.',
   },
   {
-    icon: '🎙️',
+    icon: 'interpret',
     title: 'Tolmácsolás',
     text: 'Üzleti tárgyalások, hivatalos ügyintézés, rendezvények – személyesen vagy online.',
   },

@@ -7,19 +7,25 @@
 
 Élesben a Laravel szolgálja ki a lebuildelt Angular oldalt is, így **egy domainen, egy átlagos PHP tárhelyen** fut minden (pl. Rackhost, Tárhely.eu, bármilyen cPanel).
 
-## Színtémák
+## Arculat
 
-Három beépített színtéma van, mindegyik ugyanazokkal az effektekkel:
+**Ivory + Forest Green, sárgaréz arany részletekkel.** Világos elefántcsont háttér, mélyzöld gombok és kiemelések, apró arany részletek (címke, csillagok, sorszámok, jelek).
 
-| Téma | Kód | Hangulat |
+| Szín | Kód | Mire |
 |---|---|---|
-| Midnight Blue + Teal | `midnight` | sötétkék, türkiz gombok |
-| Ivory + Forest Green | `ivory` (alapértelmezett) | világos elefántcsont, mélyzöld gombok, sárgaréz arany részletek |
-| Charcoal + Champagne | `champagne` | grafit, pezsgőarany gombok |
+| Elefántcsont | `#F7F5EF` | háttér |
+| Fehér | `#FFFFFF` | kártyák, űrlap |
+| Mélyzöld | `#245B48` | gombok, kiemelt szavak, logó |
+| Sötétzöld-szürke | `#202A26` | fő szöveg |
+| Zsályaszürke | `#5E6B64` | másodlagos szöveg |
+| Halvány zsálya | `#A7B9AD` | csak díszítés (szövegnek túl világos) |
+| Sárgaréz arany | `#C29B4A` | kitöltések: címke, jelek, pontok |
+| Óarany | `#8C6420` | ha az arany maga a szöveg |
 
-- **Kipróbálás:** a cím végére `?tema=midnight` vagy `?tema=champagne` (pl. `https://donetranslations.hu/?tema=midnight`).
-- **Végleges választás:** a `frontend/src/index.html`-ben a `<html lang="hu" data-theme="ivory">` értékét kell átírni.
-- A színek a `frontend/src/styles.css` elején vannak, témánként egy blokkban.
+- A színek a `frontend/src/styles.css` elején vannak, egy helyen.
+- Az e-mailek ugyanezt a színvilágot használják: `backend/resources/views/vendor/mail/html/themes/donetranslations.css`.
+- Megosztási kép (Facebook, Messenger): `frontend/public/og-image.png`.
+- Ikonok: `frontend/src/app/components/icon.ts` (saját vonalas ikonok, zöld körvonal arany részlettel).
 
 ## Dizájn és effektek
 

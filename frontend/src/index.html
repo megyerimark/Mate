@@ -1,23 +1,11 @@
 <!doctype html>
-<html lang="hu" data-theme="ivory">
+<html lang="hu">
 <head>
   <meta charset="utf-8">
   <title>Done Translations – Gyors, pontos fordítás | Ingyenes árajánlat 1 órán belül</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f5ef">
-  <script>
-    // Színtéma: midnight (Midnight Blue + Teal), ivory (Ivory + Forest Green), champagne (Charcoal + Champagne).
-    // Az alapértelmezett a <html data-theme> értéke; előnézethez: ?tema=ivory
-    (function () {
-      var themes = { midnight: '#0b1220', ivory: '#f7f5ef', champagne: '#17191c' };
-      var root = document.documentElement;
-      var asked = new URLSearchParams(location.search).get('tema');
-      if (asked && themes[asked]) root.setAttribute('data-theme', asked);
-      var meta = document.querySelector('meta[name=theme-color]');
-      if (meta) meta.setAttribute('content', themes[root.getAttribute('data-theme')] || themes.ivory);
-    })();
-  </script>
   <meta name="description" content="Szakfordítás, záradékolt fordítás, lektorálás és tolmácsolás magánszemélyeknek és cégeknek. Küldje el a dokumentumot, és 1 órán belül ingyenes árajánlatot kap.">
   <link rel="canonical" href="https://donetranslations.hu/">
 
@@ -26,6 +14,11 @@
   <meta property="og:description" content="Küldje el a dokumentumot, és 1 órán belül ingyenes árajánlatot kap.">
   <meta property="og:url" content="https://donetranslations.hu/">
   <meta property="og:locale" content="hu_HU">
+  <meta property="og:image" content="https://donetranslations.hu/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Done Translations – Minden nyelven. Határidőre.">
+  <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">

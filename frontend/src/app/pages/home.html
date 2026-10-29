@@ -30,7 +30,7 @@
       @for (s of services; track s.title; let i = $index) {
         <article class="card" appTilt data-reveal>
           <span class="card-index">{{ (i + 1).toString().padStart(2, '0') }}</span>
-          <div class="icon">{{ s.icon }}</div>
+          <div class="icon"><app-icon [name]="s.icon" /></div>
           <h3>{{ s.title }}</h3>
           <p>{{ s.text }}</p>
         </article>
@@ -174,9 +174,9 @@
       </h2>
       <p>Töltse fel a dokumentumot, és munkaidőben 1 órán belül jelentkezünk a pontos árral és határidővel.</p>
       <ul class="contact-list">
-        <li><span>Telefon</span><a [href]="site.phoneHref">{{ site.phone }}</a></li>
-        <li><span>E-mail</span><a [href]="'mailto:' + site.email">{{ site.email }}</a></li>
-        <li><span>Nyitvatartás</span>{{ site.openingHours }}</li>
+        <li><span>Telefon</span><a [href]="site.phoneHref"><app-icon name="phone" />{{ site.phone }}</a></li>
+        <li><span>E-mail</span><a [href]="'mailto:' + site.email"><app-icon name="mail" />{{ site.email }}</a></li>
+        <li><span>Nyitvatartás</span><span class="contact-value"><app-icon name="clock" />{{ site.openingHours }}</span></li>
       </ul>
     </div>
     <app-quote-form />

@@ -2,6 +2,7 @@ import { Component, DestroyRef, ElementRef, afterNextRender, inject } from '@ang
 import { RouterLink } from '@angular/router';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Icon } from '../components/icon';
 import { QuoteForm } from '../components/quote-form';
 import { MagneticDirective } from '../directives/magnetic.directive';
 import { TiltDirective } from '../directives/tilt.directive';
@@ -29,7 +30,7 @@ function scramble(from: string, to: string, t: number): string {
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, QuoteForm, Hero, TiltDirective, MagneticDirective],
+  imports: [RouterLink, QuoteForm, Hero, TiltDirective, MagneticDirective, Icon],
   templateUrl: './home.html',
 })
 export class Home {

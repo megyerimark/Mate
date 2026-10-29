@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SITE } from '../site.config';
+import { Icon } from './icon';
 
 @Component({
   selector: 'app-footer',
-  imports: [RouterLink],
+  imports: [RouterLink, Icon],
   template: `
     <footer class="site-footer">
       <div class="container footer-inner">
@@ -33,7 +34,7 @@ import { SITE } from '../site.config';
 
     <!-- Mobilon mindig látható gyorsgombok -->
     <div class="mobile-bar">
-      <a [href]="site.phoneHref">📞 Hívás</a>
+      <a [href]="site.phoneHref"><app-icon name="phone" /> Hívás</a>
       <a routerLink="/" fragment="ajanlat" class="primary">Ingyenes ajánlat</a>
     </div>
   `,
