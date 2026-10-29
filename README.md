@@ -13,12 +13,12 @@ Három beépített színtéma van, mindegyik ugyanazokkal az effektekkel:
 
 | Téma | Kód | Hangulat |
 |---|---|---|
-| Midnight Blue + Teal | `midnight` (alapértelmezett) | sötétkék, türkiz gombok |
-| Ivory + Forest Green | `ivory` | világos elefántcsont, mélyzöld gombok |
+| Midnight Blue + Teal | `midnight` | sötétkék, türkiz gombok |
+| Ivory + Forest Green | `ivory` (alapértelmezett) | világos elefántcsont, mélyzöld gombok, sárgaréz arany részletek |
 | Charcoal + Champagne | `champagne` | grafit, pezsgőarany gombok |
 
-- **Kipróbálás:** a cím végére `?tema=ivory` vagy `?tema=champagne` (pl. `https://donetranslations.hu/?tema=ivory`).
-- **Végleges választás:** a `frontend/src/index.html`-ben a `<html lang="hu" data-theme="midnight">` értékét kell átírni.
+- **Kipróbálás:** a cím végére `?tema=midnight` vagy `?tema=champagne` (pl. `https://donetranslations.hu/?tema=midnight`).
+- **Végleges választás:** a `frontend/src/index.html`-ben a `<html lang="hu" data-theme="ivory">` értékét kell átírni.
 - A színek a `frontend/src/styles.css` elején vannak, témánként egy blokkban.
 
 ## Dizájn és effektek

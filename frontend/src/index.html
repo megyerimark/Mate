@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="hu" data-theme="midnight">
+<html lang="hu" data-theme="ivory">
 <head>
   <meta charset="utf-8">
   <title>Done Translations – Gyors, pontos fordítás | Ingyenes árajánlat 1 órán belül</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b1220">
+  <meta name="theme-color" content="#f7f5ef">
   <script>
     // Színtéma: midnight (Midnight Blue + Teal), ivory (Ivory + Forest Green), champagne (Charcoal + Champagne).
     // Az alapértelmezett a <html data-theme> értéke; előnézethez: ?tema=ivory
@@ -15,7 +15,7 @@
       var asked = new URLSearchParams(location.search).get('tema');
       if (asked && themes[asked]) root.setAttribute('data-theme', asked);
       var meta = document.querySelector('meta[name=theme-color]');
-      if (meta) meta.setAttribute('content', themes[root.getAttribute('data-theme')] || themes.midnight);
+      if (meta) meta.setAttribute('content', themes[root.getAttribute('data-theme')] || themes.ivory);
     })();
   </script>
   <meta name="description" content="Szakfordítás, záradékolt fordítás, lektorálás és tolmácsolás magánszemélyeknek és cégeknek. Küldje el a dokumentumot, és 1 órán belül ingyenes árajánlatot kap.">

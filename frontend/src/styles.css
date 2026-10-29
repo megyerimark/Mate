@@ -15,6 +15,7 @@
   --accent-grad: linear-gradient(100deg, #39c6b0 0%, #a6f0e3 35%, #39c6b0 60%, #7fe0d0 100%);
   --icon-filter: grayscale(1) brightness(1.5);
   --danger: #ff6b7a;
+  --warm: #e8c27a; --warm-rgb: 232, 194, 122; --warm-ink: #e8c27a; --on-warm: #0b1220;
   --particle-a: #a6f0e3; --particle-b: #39c6b0; --particle-blend: additive;
   color-scheme: dark;
 }
@@ -28,7 +29,9 @@
   --accent-grad: linear-gradient(100deg, #245b48 0%, #3f8a6e 35%, #245b48 60%, #2f7259 100%);
   --icon-filter: grayscale(1) contrast(1.2);
   --danger: #b3261e;
-  --particle-a: #245b48; --particle-b: #7f9a8a; --particle-blend: normal;
+  /* Második kiemelő szín: sárgaréz arany. --warm kitöltésre, --warm-ink ha arany a szöveg a világos háttéren. */
+  --warm: #c29b4a; --warm-rgb: 194, 155, 74; --warm-ink: #8c6420; --on-warm: #202a26;
+  --particle-a: #245b48; --particle-b: #c29b4a; --particle-blend: normal;
   color-scheme: light;
 }
 :root[data-theme="champagne"] {
@@ -41,6 +44,7 @@
   --accent-grad: linear-gradient(100deg, #c9ad78 0%, #eedfbd 35%, #c9ad78 60%, #ddc596 100%);
   --icon-filter: grayscale(1) brightness(1.5) sepia(.25);
   --danger: #ff6b7a;
+  --warm: #c9ad78; --warm-rgb: 201, 173, 120; --warm-ink: #c9ad78; --on-warm: #17191c;
   --particle-a: #eedfbd; --particle-b: #c9ad78; --particle-blend: additive;
   color-scheme: dark;
 }
@@ -143,8 +147,8 @@ app-cursor.hover .cursor-ring { width: 70px; height: 70px; margin: -35px 0 0 -35
 .hero-content { position: relative; display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; }
 .hero-text { max-width: 880px; }
 .eyebrow { display: inline-flex; align-items: center; gap: .6em; color: var(--muted); font-size: .9rem; margin: 0 0 1.2em; padding: .4em 1em; border: 1px solid var(--border); border-radius: 999px; background: rgba(var(--bg-rgb), .5); letter-spacing: .04em; }
-.pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgba(var(--accent-rgb), .7); animation: pulse 2s infinite; }
-@keyframes pulse { 70% { box-shadow: 0 0 0 10px rgba(var(--accent-rgb), 0); } 100% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0); } }
+.pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--warm); box-shadow: 0 0 0 0 rgba(var(--warm-rgb), .7); animation: pulse 2s infinite; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 10px rgba(var(--warm-rgb), 0); } 100% { box-shadow: 0 0 0 0 rgba(var(--warm-rgb), 0); } }
 .hero h1 { font-size: clamp(2.4rem, 6.2vw, 5.4rem); font-weight: 300; text-transform: uppercase; letter-spacing: -.02em; line-height: 1; margin-bottom: .4em; }
 .line { display: block; overflow: hidden; padding-bottom: .04em; }
 .line > span { display: inline-block; }
@@ -158,7 +162,7 @@ app-cursor.hover .cursor-ring { width: 70px; height: 70px; margin: -35px 0 0 -35
 .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .hero-meta { display: grid; text-align: right; font-family: var(--display); }
 .hero-counter { color: var(--muted); font-size: .9rem; letter-spacing: .1em; }
-.hero-lang { font-size: 1.6rem; font-weight: 300; color: var(--accent); }
+.hero-lang { font-size: 1.6rem; font-weight: 300; color: var(--warm-ink); }
 .scroll-hint { position: absolute; left: 50%; bottom: 20px; width: 24px; height: 40px; margin-left: -12px; border: 1px solid var(--border); border-radius: 20px; }
 .scroll-hint span { position: absolute; left: 50%; top: 8px; width: 3px; height: 8px; margin-left: -1.5px; border-radius: 2px; background: var(--accent); animation: scroll-hint 1.8s infinite; }
 @keyframes scroll-hint { 0% { opacity: 0; transform: translateY(0); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(14px); } }
@@ -166,7 +170,7 @@ app-cursor.hover .cursor-ring { width: 70px; height: 70px; margin: -35px 0 0 -35
 /* Nyelvi szalag */
 .marquee { padding: 40px 0; overflow: hidden; border-block: 1px solid var(--border); background: var(--bg-2); }
 .marquee-row { display: flex; gap: .6em; white-space: nowrap; font-family: var(--display); font-weight: 300; font-size: clamp(2.4rem, 7vw, 6rem); text-transform: uppercase; letter-spacing: -.01em; line-height: 1.1; width: max-content; }
-.marquee-row i { font-style: normal; color: var(--accent); font-size: .4em; align-self: center; }
+.marquee-row i { font-style: normal; color: var(--warm); font-size: .4em; align-self: center; }
 .marquee-row.outline { color: transparent; -webkit-text-stroke: 1px rgba(var(--tint), .3); margin-left: -30%; }
 
 /* Szakaszok */
@@ -190,7 +194,7 @@ app-cursor.hover .cursor-ring { width: 70px; height: 70px; margin: -35px 0 0 -35
 }
 .card:hover, .price-card:hover { border-color: rgba(var(--accent-rgb), .45); }
 .card:hover::before, .price-card:hover::before { opacity: 1; }
-.card-index { position: absolute; top: 28px; right: 30px; font-family: var(--display); color: var(--muted); font-size: .85rem; }
+.card-index { position: absolute; top: 28px; right: 30px; font-family: var(--display); color: var(--warm-ink); font-size: .85rem; }
 .card .icon { font-size: 2rem; margin-bottom: 40px; filter: var(--icon-filter); }
 .card h3 { font-size: 1.4rem; font-weight: 500; }
 .card p { color: var(--muted); margin: 0; }
@@ -199,7 +203,7 @@ app-cursor.hover .cursor-ring { width: 70px; height: 70px; margin: -35px 0 0 -35
 .live { min-height: 100svh; display: flex; align-items: center; background: radial-gradient(ellipse at 70% 50%, rgba(var(--accent-rgb), .07), transparent 60%), var(--bg); }
 .live-inner { padding: 100px 0; }
 .live-head { display: flex; align-items: center; gap: .7em; font-family: var(--display); color: var(--muted); text-transform: uppercase; letter-spacing: .12em; font-size: .9rem; }
-.live-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 16px rgba(var(--accent-rgb), .8); animation: blink 1.2s infinite; }
+.live-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--warm); box-shadow: 0 0 16px rgba(var(--warm-rgb), .8); animation: blink 1.2s infinite; }
 @keyframes blink { 50% { opacity: .3; } }
 .live-lang { color: var(--accent); }
 .live-text { font-family: var(--display); font-weight: 300; font-size: clamp(2rem, 5.4vw, 4.6rem); line-height: 1.12; letter-spacing: -.02em; margin: .5em 0 .7em; min-height: 3.4em; max-width: 22ch; }
@@ -231,7 +235,7 @@ app-cursor.hover .cursor-ring { width: 70px; height: 70px; margin: -35px 0 0 -35
 .pricing { grid-template-columns: repeat(3, 1fr); align-items: stretch; }
 .price-card { position: relative; display: flex; flex-direction: column; padding: 40px 32px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); overflow: hidden; transition: transform .2s ease-out, border-color .3s; }
 .price-card.featured { border-color: rgba(var(--accent-rgb), .55); background: linear-gradient(180deg, rgba(var(--accent-rgb), .1), var(--surface)); box-shadow: 0 30px 80px -40px rgba(var(--accent-rgb), .5); }
-.badge { align-self: flex-start; margin-bottom: 20px; background: var(--accent); color: var(--on-accent); font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; padding: .3em .9em; border-radius: 999px; }
+.badge { align-self: flex-start; margin-bottom: 20px; background: var(--warm); color: var(--on-warm); font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; padding: .3em .9em; border-radius: 999px; }
 .price-card h3 { font-size: 1.3rem; color: var(--muted); font-weight: 500; }
 .price { font-family: var(--display); font-size: 2.4rem; font-weight: 300; margin: .1em 0 .8em; }
 .price span { font-size: .95rem; color: var(--muted); font-weight: 400; }
@@ -254,7 +258,7 @@ app-cursor.hover .cursor-ring { width: 70px; height: 70px; margin: -35px 0 0 -35
 .t-marquee:hover .t-track { animation-play-state: paused; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 .quote { margin: 0; width: min(420px, 80vw); padding: 32px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); }
-.stars { color: var(--accent); letter-spacing: 3px; margin-bottom: 14px; }
+.stars { color: var(--warm-ink); letter-spacing: 3px; margin-bottom: 14px; }
 .quote blockquote { margin: 0 0 18px; font-size: 1.08rem; }
 .quote figcaption { color: var(--muted); font-size: .92rem; }
 
