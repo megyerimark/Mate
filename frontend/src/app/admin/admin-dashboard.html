@@ -1,0 +1,155 @@
+<div class="adm">
+  <header class="adm-top">
+    <div class="adm-brand"><span class="logo-mark" aria-hidden="true">✓</span><span>Done<strong>Translations</strong></span> <span class="adm-tag">Admin</span></div>
+    <div class="adm-top-right">
+      <a href="/" target="_blank" rel="noopener" class="adm-link">Weboldal ↗</a>
+      <span class="adm-user">{{ auth.user()?.email }}</span>
+      <button type="button" class="btn btn-ghost btn-sm" (click)="logout()">Kilépés</button>
+    </div>
+  </header>
+
+  <main class="adm-main">
+    <div class="adm-head">
+      <div>
+        <h1>Ajánlatkérések</h1>
+        <p class="adm-sub">
+          @if (newCount()) {
+            <strong>{{ newCount() }} új</strong> ajánlatkérés vár válaszra.
+          } @else {
+            Minden ajánlatkérésre válaszoltál.
+          }
+          @if (stats(); as s) { Ebben a hónapban {{ s.this_month }} érkezett. }
+        </p>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm" (click)="load()">Frissítés</button>
+    </div>
+
+    <!-- Összesítő: kattintásra szűr -->
+    <div class="adm-stats" role="group" aria-label="Szűrés állapot szerint">
+      <button type="button" class="adm-stat" [class.active]="filterStatus() === ''" (click)="setStatusFilter('')">
+        <span>Összes</span><b>{{ stats()?.total ?? '–' }}</b>
+      </button>
+      @for (s of statuses; track s.value) {
+        <button type="button" class="adm-stat" [attr.data-status]="s.value" [class.active]="filterStatus() === s.value" (click)="setStatusFilter(s.value)">
+          <span><i class="adm-dot"></i>{{ s.label }}</span>
+          <b>{{ statTotal(s.value) }}</b>
+        </button>
+      }
+    </div>
+
+    <div class="adm-toolbar">
+      <input class="adm-search" type="search" placeholder="Keresés név, e-mail, telefon vagy megjegyzés alapján…"
+        [ngModel]="search()" (ngModelChange)="onSearch($event)" aria-label="Keresés" />
+    </div>
+
+    @if (listError()) {
+      <p class="adm-error" role="alert">{{ listError() }} <button type="button" class="adm-link" (click)="load()">Újra</button></p>
+    }
+
+    <div class="adm-table-wrap" [class.is-loading]="loading()">
+      <table class="adm-table">
+        <thead>
+          <tr><th>Beérkezett</th><th>Ügyfél</th><th>Nyelvpár</th><th>Határidő</th><th>Dok.</th><th>Állapot</th></tr>
+        </thead>
+        <tbody>
+          @for (q of page()?.data ?? []; track q.id) {
+            <tr (click)="open(q)" (keydown.enter)="open(q)" tabindex="0" [class.selected]="selected()?.id === q.id" [class.unread]="q.status === 'new'">
+              <td><span class="adm-date">{{ date(q.created_at) }}</span><small>{{ ago(q.created_at) }}</small></td>
+              <td><b>{{ q.name }}</b><small>{{ q.email }}</small></td>
+              <td>{{ pair(q) }}</td>
+              <td><span class="adm-deadline" [attr.data-deadline]="q.deadline">{{ q.deadline_label }}</span></td>
+              <td>@if (q.has_document) { <app-icon name="document" class="adm-doc" aria-label="Van csatolt dokumentum" /> }</td>
+              <td><span class="adm-pill" [attr.data-status]="q.status">{{ q.status_label }}</span></td>
+            </tr>
+          } @empty {
+            @if (!loading()) {
+              <tr class="adm-empty"><td colspan="6">
+                @if (search() || filterStatus()) { Nincs találat a szűrésre. } @else { Még nincs ajánlatkérés. Amint valaki kitölti az űrlapot a weboldalon, itt jelenik meg. }
+              </td></tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (page(); as p) {
+      @if (p.meta.last_page > 1) {
+        <nav class="adm-pager" aria-label="Lapozás">
+          <button type="button" class="btn btn-ghost btn-sm" [disabled]="p.meta.current_page <= 1" (click)="goTo(p.meta.current_page - 1)">← Előző</button>
+          <span>{{ p.meta.from }}–{{ p.meta.to }} / {{ p.meta.total }}</span>
+          <button type="button" class="btn btn-ghost btn-sm" [disabled]="p.meta.current_page >= p.meta.last_page" (click)="goTo(p.meta.current_page + 1)">Következő →</button>
+        </nav>
+      }
+    }
+  </main>
+
+  <!-- Részletek -->
+  @if (selected(); as q) {
+    <div class="adm-backdrop" (click)="close()" aria-hidden="true"></div>
+    <aside class="adm-drawer" role="dialog" aria-modal="true" [attr.aria-label]="q.name + ' ajánlatkérése'">
+      <div class="adm-drawer-head">
+        <div>
+          <span class="adm-pill" [attr.data-status]="q.status">{{ q.status_label }}</span>
+          <h2>{{ q.name }}</h2>
+          <p class="adm-sub">#{{ q.id }} · {{ date(q.created_at) }}</p>
+        </div>
+        <button type="button" class="adm-close" (click)="close()" aria-label="Bezárás">×</button>
+      </div>
+
+      <div class="adm-actions">
+        <a class="btn btn-sm" [href]="replyLink(q)">Válasz e-mailben</a>
+        @if (q.phone) { <a class="btn btn-ghost btn-sm" [href]="'tel:' + q.phone">Hívás</a> }
+        @if (q.has_document) { <button type="button" class="btn btn-ghost btn-sm" (click)="download()">Dokumentum letöltése</button> }
+      </div>
+
+      <dl class="adm-facts">
+        <dt>E-mail</dt><dd>{{ q.email }}</dd>
+        <dt>Telefon</dt><dd>{{ q.phone || '–' }}</dd>
+        <dt>Nyelvpár</dt><dd>{{ pair(q) }}</dd>
+        <dt>Határidő</dt><dd><span class="adm-deadline" [attr.data-deadline]="q.deadline">{{ q.deadline_label }}</span></dd>
+        <dt>Dokumentum</dt><dd>{{ q.document_name || 'nincs csatolva' }}</dd>
+      </dl>
+
+      @if (q.message) {
+        <section class="adm-block">
+          <h3>Az ügyfél megjegyzése</h3>
+          <p class="adm-message">{{ q.message }}</p>
+        </section>
+      }
+
+      <section class="adm-block">
+        <h3>Állapot</h3>
+        <div class="adm-status-pick" role="radiogroup" aria-label="Állapot">
+          @for (s of statuses; track s.value) {
+            <button type="button" role="radio" [attr.aria-checked]="q.status === s.value" [attr.data-status]="s.value"
+              [class.active]="q.status === s.value" [disabled]="saving()" (click)="setStatus(s.value)">{{ s.label }}</button>
+          }
+        </div>
+      </section>
+
+      <section class="adm-block">
+        <h3><label for="adm-note">Belső jegyzet</label></h3>
+        <textarea id="adm-note" rows="4" placeholder="Pl. 12 000 Ft, kedd délig. Az ügyfél nem látja."
+          [ngModel]="note()" (ngModelChange)="note.set($event)"></textarea>
+        <div class="adm-row">
+          <button type="button" class="btn btn-sm" [disabled]="!noteChanged() || saving()" (click)="saveNote()">Jegyzet mentése</button>
+          @if (saved()) { <span class="adm-ok" role="status">✓ {{ saved() }}</span> }
+        </div>
+      </section>
+
+      @if (detailError()) { <p class="adm-error" role="alert">{{ detailError() }}</p> }
+
+      <section class="adm-block adm-danger">
+        @if (!confirmDelete()) {
+          <button type="button" class="adm-link danger" (click)="confirmDelete.set(true)">Ajánlatkérés törlése</button>
+        } @else {
+          <p>Biztosan törlöd? A feltöltött dokumentum is törlődik, és ez nem vonható vissza.</p>
+          <div class="adm-row">
+            <button type="button" class="btn btn-sm btn-danger" (click)="remove()">Igen, törlöm</button>
+            <button type="button" class="btn btn-ghost btn-sm" (click)="confirmDelete.set(false)">Mégse</button>
+          </div>
+        }
+      </section>
+    </aside>
+  }
+</div>

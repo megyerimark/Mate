@@ -26,5 +26,9 @@ class AppServiceProvider extends ServiceProvider
             Limit::perMinute(5)->by($request->ip()),
             Limit::perDay(30)->by($request->ip()),
         ]);
+
+        // Jelszópróbálgatás ellen: 5 próba percenként IP és e-mail szerint.
+        RateLimiter::for('admin-login', fn (Request $request) => Limit::perMinute(5)
+            ->by(strtolower((string) $request->input('email')).'|'.$request->ip()));
     }
 }
